@@ -10,17 +10,24 @@
     <app-squarecell
         *ngFor = "let val of squares; let ind  = index"
         [value] = "val"
+        [winnerFound] = "winner"
         (click) = "makeMove(ind)">
     </app-squarecell>
     
 </main>
+
+
+
 
     <h2   
     *ngIf = "winner" >    
         Player {{ winner }} has won the game!
     </h2>
 
-
+    <h2   
+    *ngIf = "draw && !winner" >    
+        The game is a draw
+    </h2>
 
 
 

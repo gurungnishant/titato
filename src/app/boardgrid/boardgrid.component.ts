@@ -9,6 +9,8 @@ export class BoardgridComponent implements OnInit {
   squares : any[] = [];
   xIsNext: boolean = false;
   winner : any = null;
+  draw : boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
@@ -20,6 +22,7 @@ export class BoardgridComponent implements OnInit {
     this.squares = Array(9).fill(null);
     this.winner = null;
     this.xIsNext = true;
+    this.draw = false;
   }
 
   get player(){
@@ -40,7 +43,21 @@ export class BoardgridComponent implements OnInit {
       this.xIsNext = !this.xIsNext;
     }
     this.winner = this.calculateWinner();
+    this.draw = this.drawCheck();
+
   }
+
+  drawCheck(){
+    for (let j = 0; j < this.squares.length; j++) {
+      if(!this.squares[j]){
+        return false;
+    }
+  }
+  return true;
+}
+
+
+
 
 
 /*
@@ -67,7 +84,6 @@ else return null
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
       if (
-        this.squares[a] &&
         this.squares[a] === this.squares[b] &&
         this.squares[a] === this.squares[c]
       ) {

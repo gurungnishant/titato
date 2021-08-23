@@ -14,5 +14,18 @@ export class SquarecellComponent implements OnInit {
   }
 
 @Input() value = '';
+@Input() winnerFound: String = '';
+
+
+
+//this part of code is to address disabling the remaining buttons on board when winner is found
+//still pending
+check (){
+  if(this.winnerFound == 'O'|| this.winnerFound == 'X'){
+    return true;
+  }
+  else return false;
+}
+
 
 }
