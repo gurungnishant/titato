@@ -1,3 +1,15 @@
+Nishant Gurung TICTACTOE project : dependencies: angular material and angular flex. 
+
+2 player game : TICTACTOE
+
+1.) Clone the repository
+2.) ng serve
+
+please contact me @ nishantgurung.g@gmail.com for any issues or concerns.
+
+Pending: Future Goals : Implementing an AI MINMAX Algorithm and Greedy Algo apporach for player vs AI. Feature will be added separately using routing from the mat tool bar at top of current app.
+
+
 # Ttt
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.2.
