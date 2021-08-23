@@ -13,10 +13,9 @@ export class BoardgridComponent implements OnInit {
 
   ngOnInit(): void {
     this.newGame();
-
-
   }
 
+  //reset the board
   newGame(){
     this.squares = Array(9).fill(null);
     this.winner = null;
@@ -27,6 +26,14 @@ export class BoardgridComponent implements OnInit {
     return this.xIsNext ? 'X' : 'O';
   }
 
+
+  /*
+  if array value is not initalized
+  splice the current get player value in that index
+  set xIsNext state to opposite F-> T || T -> F
+  so O can play or X can play
+  
+  */
   makeMove(idx : number) {
     if(!this.squares[idx]){
       this.squares.splice(idx, 1 , this.player);
@@ -34,6 +41,16 @@ export class BoardgridComponent implements OnInit {
     }
     this.winner = this.calculateWinner();
   }
+
+
+/*
+const lines= all possible winning moves represented
+in index 0 - 8
+if all three indexes contain same value 
+return winner value which is X or O
+then this.winner is initialized and announced in UI
+else return null
+*/
 
 
   calculateWinner() {

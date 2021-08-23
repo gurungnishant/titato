@@ -1,19 +1,29 @@
+
+
+
 <h1> Current Player : {{player}} </h1>
 
-<button (click) = "newGame()"> Start New Game </button>
+<button mat-raised-button color="primary" (click) = "newGame()"> Start New Game </button>
 
-<h2   
-*ngIf = "winner" >    
-    Player {{ winner }} has won the game!
-</h2>
 
 <main>
     <app-squarecell
-        *ngFor = "let val of squares; let i  = index"
+        *ngFor = "let val of squares; let ind  = index"
         [value] = "val"
-        (click) = "makeMove(i)">
+        (click) = "makeMove(ind)">
     </app-squarecell>
     
 </main>
+
+    <h2   
+    *ngIf = "winner" >    
+        Player {{ winner }} has won the game!
+    </h2>
+
+
+
+
+
+
 
 

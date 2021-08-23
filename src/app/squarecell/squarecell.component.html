@@ -1,2 +1,5 @@
-<button >{{ value }}</button>
+
+<button mat-raised-button color="accent" *ngIf="!value">{{ value }}</button>
+<button mat-raised-button color="primary"  *ngIf="value == 'X'">{{ value }}</button>
+<button  mat-raised-button color="warn"  *ngIf="value == 'O'">{{ value }}</button>
 
