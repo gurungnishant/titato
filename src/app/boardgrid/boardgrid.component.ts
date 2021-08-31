@@ -155,13 +155,6 @@ testrun(){
   queue:any = [];
 
   calculateWinner2(i : number, j : number) {
-      
-      // if (x - 1 >= 0 && image[x - 1][y] === color) queue.push([x - 1, y]);
-      // if (y - 1 >= 0 && image[x][y - 1] === color) queue.push([x, y - 1]);
-      // if (x + 1 < image.length && image[x + 1][y] === color) queue.push([x + 1, y]);
-      // if (y + 1 < image[0].length && image[x][y + 1] === color) queue.push([x, y + 1]);
-
-
  //outer field     
       //top
       if ( i-1 >=0 && this.boxBoard[i-1][j] === this.boxBoard[i][j]) {
@@ -179,8 +172,6 @@ testrun(){
         }
       }
 
-
-
     //left
     if ( j-1 >= 0 && this.boxBoard[i][j-1] === this.boxBoard[i][j]) {
       if ( j-2 >= 0 && this.boxBoard[i][j-2] === this.boxBoard[i][j]) {
@@ -190,8 +181,6 @@ testrun(){
         return this.boxBoard[i][j];
       }
     }
-
-
     //right
     if ( j+1 < this.columns && this.boxBoard[i][j+1] === this.boxBoard[i][j]) {
       if ( j+2 < this.columns && this.boxBoard[i][j+2] === this.boxBoard[i][j]) {
@@ -199,55 +188,47 @@ testrun(){
       }
     }
 
-    
+//upleft - //downright
 
-//upleft
+    if ( i-1 >= 0 && j-1 >=0 && this.boxBoard[i-1][j-1] === this.boxBoard[i][j]) {
+     
+      if (i-2 >= 0 && j-2 >=0  && this.boxBoard[i-2][j-2] === this.boxBoard[i][j]) {
+        return this.boxBoard[i][j];
+      }
 
-//upright
+      if ( i+1 < this.rows && j+1 <this.columns && this.boxBoard[i+1][j+1] === this.boxBoard[i][j]) {
+        return this.boxBoard[i][j];
+      }
+    }
+      
+    if ( i+1 < this.rows && j+1 <this.columns && this.boxBoard[i+1][j+1] === this.boxBoard[i][j]) {
+      if ( i+2 < this.rows && j+2 < this.columns && this.boxBoard[i+2][j+2] === this.boxBoard[i][j]) {
+        return this.boxBoard[i][j];
+      }
+    }
 
-//downleft
 
-//downright
+//upright --  downleft
+if ( i-1 >= 0 && j+1 <this.columns && this.boxBoard[i-1][j+1] === this.boxBoard[i][j]) {
+     
+  if (i-2 >= 0 && j+2 <=this.columns && this.boxBoard[i-2][j+2] === this.boxBoard[i][j]) {
+    return this.boxBoard[i][j];
+  }
 
-
-//inner field
-
-
+  if ( i+1 < this.rows && j-1 >=0 && this.boxBoard[i+1][j-1] === this.boxBoard[i][j]) {
+    return this.boxBoard[i][j];
+  }
+}
+  
+if ( i+1 < this.rows && j-1 >=0 && this.boxBoard[i+1][j-1] === this.boxBoard[i][j]) {
+  if ( i+2 < this.rows && j-2 >=0  && this.boxBoard[i+2][j-2] === this.boxBoard[i][j]) {
+    return this.boxBoard[i][j];
+  }
+}
 
 
   return null;
   }
-
-
-
-
-
-  
-
- 
-
-
-
-    
-/*
-    
-          0 1 2 3 4 
-          5 6 7 8 9 
-
-
-      
-*/
-    
-    
-  
-
-
-
-
-
-
-
-
 
 
 /*
