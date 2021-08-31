@@ -7,19 +7,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BoardgridComponent implements OnInit {
   squares : any[] = [];
+  boxBoard : any[] = [];
+
+
   xIsNext: boolean = false;
   aPlayer : boolean = true; 
   bPlayer : boolean = false; 
   cPlayer : boolean = false; 
-  dPlayer : boolean = false; 
-
+  dPlayer : boolean = false;
   winner : any = null;
   draw : boolean = false;
+
+
+  rows = 5;
+  columns = 5;
+
+  new2DBoard(){
+    for (let i = 0; i < this.rows; i++){
+        this.boxBoard[i] = [];
+        for (let j = 0; j < this.columns; j++){
+          this.boxBoard[i][j] = null;
+        }
+    }
+  }
+
 
   constructor() { }
 
   ngOnInit(): void {
     this.newGame();
+    this.new2DBoard();
   }
 
   //reset the board
@@ -32,7 +49,22 @@ export class BoardgridComponent implements OnInit {
     this.bPlayer = false; 
     this.cPlayer  = false; 
     this.dPlayer = false; 
+    this.new2DBoard();
+    //this.testrun();
   }
+
+testrun(){
+  for (let i = 0; i < this.rows; i++){
+    for (let j = 0; j < this.columns; j++){
+      console.log(this.boxBoard[i][j]);
+    }
+  }
+}
+
+
+
+
+
 
   get player(){
     if(this.aPlayer){
@@ -63,32 +95,24 @@ export class BoardgridComponent implements OnInit {
       this.squares.splice(idx, 1 , this.player);
       this.aPlayer = !this.aPlayer;
       this.bPlayer = !this.bPlayer;
-      // console.log(" aplayer "+this.aPlayer);
-      // console.log(" bplayer "+this.bPlayer);
 
     }
     else if(!this.squares[idx] &&  this.bPlayer == true ){
       this.squares.splice(idx, 1 , this.player);
       this.bPlayer = !this.bPlayer;
       this.cPlayer = !this.cPlayer;
-      // console.log(" bplayer "+this.bPlayer);
-      // console.log(" cplayer "+this.cPlayer);
 
     } 
     else if(!this.squares[idx] &&  this.cPlayer == true ){
       this.squares.splice(idx, 1 , this.player);
       this.cPlayer = !this.cPlayer;
       this.dPlayer = !this.dPlayer;
-      // console.log(" cplayer "+this.cPlayer);
-      // console.log(" dplayer "+this.dPlayer);
 
     }
     else if(!this.squares[idx] &&  this.dPlayer == true ){
       this.squares.splice(idx, 1 , this.player);
       this.dPlayer = !this.dPlayer;
       this.aPlayer = !this.aPlayer;
-      // console.log(" dplayer "+this.dPlayer);
-      // console.log(" aplayer "+this.aPlayer);
 
     }
     this.winner = this.calculateWinner();
@@ -96,14 +120,134 @@ export class BoardgridComponent implements OnInit {
 
   }
 
-  drawCheck(){
-    for (let j = 0; j < this.squares.length; j++) {
-      if(!this.squares[j]){
-        return false;
+
+
+  makeMove2(i : number, j : number) {
+    if(!this.boxBoard[i][j] &&  this.aPlayer == true ){
+      this.boxBoard[i].splice(j, 1 , this.player);
+      this.aPlayer = !this.aPlayer;
+      this.bPlayer = !this.bPlayer;
     }
+    else if(!this.boxBoard[i][j] &&  this.bPlayer == true ){
+      this.boxBoard[i].splice(j, 1 , this.player);
+      this.bPlayer = !this.bPlayer;
+      this.cPlayer = !this.cPlayer;
+    }
+    else if(!this.boxBoard[i][j] &&  this.cPlayer == true ){
+      this.boxBoard[i].splice(j, 1 , this.player);
+      this.cPlayer = !this.cPlayer;
+      this.dPlayer = !this.dPlayer;
+    }
+    else if(!this.boxBoard[i][j] &&  this.dPlayer == true ){
+      this.boxBoard[i].splice(j, 1 , this.player);
+      this.dPlayer = !this.dPlayer;
+      this.aPlayer = !this.aPlayer;
+    }
+
+
+    this.winner = this.calculateWinner2(i, j);
+    this.draw = this.drawCheck();
+
   }
-  return true;
-}
+
+
+  
+  queue:any = [];
+
+  calculateWinner2(i : number, j : number) {
+      
+      // if (x - 1 >= 0 && image[x - 1][y] === color) queue.push([x - 1, y]);
+      // if (y - 1 >= 0 && image[x][y - 1] === color) queue.push([x, y - 1]);
+      // if (x + 1 < image.length && image[x + 1][y] === color) queue.push([x + 1, y]);
+      // if (y + 1 < image[0].length && image[x][y + 1] === color) queue.push([x, y + 1]);
+
+
+ //outer field     
+      //top
+      if ( i-1 >=0 && this.boxBoard[i-1][j] === this.boxBoard[i][j]) {
+        if ( i-2 >= 0 && this.boxBoard[i-2][j] === this.boxBoard[i][j]) {
+          return this.boxBoard[i][j];
+        }
+        if ( i+1 < this.rows && this.boxBoard[i+1][j] === this.boxBoard[i][j]) {
+          return this.boxBoard[i][j];
+        }
+      }
+      //bot
+      if ( i+1 < this.rows && this.boxBoard[i+1][j] === this.boxBoard[i][j]) {
+        if ( i+2 < this.rows && this.boxBoard[i+2][j] === this.boxBoard[i][j]) {
+          return this.boxBoard[i][j];
+        }
+      }
+
+
+
+    //left
+    if ( j-1 >= 0 && this.boxBoard[i][j-1] === this.boxBoard[i][j]) {
+      if ( j-2 >= 0 && this.boxBoard[i][j-2] === this.boxBoard[i][j]) {
+        return this.boxBoard[i][j];
+      }
+      if ( j+1 < this.columns && this.boxBoard[i][j+1] === this.boxBoard[i][j]) {
+        return this.boxBoard[i][j];
+      }
+    }
+
+
+    //right
+    if ( j+1 < this.columns && this.boxBoard[i][j+1] === this.boxBoard[i][j]) {
+      if ( j+2 < this.columns && this.boxBoard[i][j+2] === this.boxBoard[i][j]) {
+        return this.boxBoard[i][j];
+      }
+    }
+
+    
+
+//upleft
+
+//upright
+
+//downleft
+
+//downright
+
+
+//inner field
+
+
+
+
+  return null;
+  }
+
+
+
+
+
+  
+
+ 
+
+
+
+    
+/*
+    
+          0 1 2 3 4 
+          5 6 7 8 9 
+
+
+      
+*/
+    
+    
+  
+
+
+
+
+
+
+
+
 
 
 /*
@@ -170,14 +314,19 @@ else return null
 
 
 
+  drawCheck(){
+    for (let j = 0; j < this.squares.length; j++) {
+      if(!this.squares[j]){
+        return false;
+    }
+  }
+  return true;
+}
 
 
 
 
 
-
-
-  
 
 
 
