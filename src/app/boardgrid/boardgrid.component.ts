@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class BoardgridComponent implements OnInit {
   squares : any[] = [];
   boxBoard : any[] = [];
+  turnCounter:number = 0;
 
 
   xIsNext: boolean = false;
@@ -51,6 +52,7 @@ export class BoardgridComponent implements OnInit {
     this.dPlayer = false; 
     this.new2DBoard();
     //this.testrun();
+    this.turnCounter = 0;
   }
 
 testrun(){
@@ -113,11 +115,12 @@ testrun(){
       this.squares.splice(idx, 1 , this.player);
       this.dPlayer = !this.dPlayer;
       this.aPlayer = !this.aPlayer;
-
+      this.turnCounter++;
     }
+    if(this.turnCounter >2){
     this.winner = this.calculateWinner();
     this.draw = this.drawCheck();
-
+    }
   }
 
 
@@ -142,12 +145,15 @@ testrun(){
       this.boxBoard[i].splice(j, 1 , this.player);
       this.dPlayer = !this.dPlayer;
       this.aPlayer = !this.aPlayer;
+      this.turnCounter++;
     }
 
-
-    this.winner = this.calculateWinner2(i, j);
-    this.draw = this.drawCheck();
-
+    if(this.turnCounter>=2){
+      this.winner = this.calculateWinner2(i, j);
+      this.draw = this.drawCheck();
+  
+      }
+   
   }
 
 
