@@ -14,13 +14,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { PlaymenuComponent } from './playmenu/playmenu.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SquarecellComponent,
-    BoardgridComponent
+    BoardgridComponent,
+    PlaymenuComponent
   ],
   imports: [
     BrowserModule,

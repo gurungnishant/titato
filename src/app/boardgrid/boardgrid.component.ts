@@ -23,6 +23,20 @@ export class BoardgridComponent implements OnInit {
   rows = 5;
   columns = 5;
 
+  selected : string = '';
+  selectedmode : string = 'ffa';
+  selectednum: number = 3;
+
+  selectChangehandler(event : any){
+    this.selected = event.target.value;
+    this.selectednum = +this.selected;
+  } 
+
+  selectChangehandlermode(event : any){
+    this.selectedmode = event.target.value;
+  } 
+
+
   new2DBoard(){
     for (let i = 0; i < this.rows; i++){
         this.boxBoard[i] = [];
@@ -64,10 +78,6 @@ testrun(){
 }
 
 
-
-
-
-
   get player(){
     if(this.aPlayer){
       return 'A';
@@ -85,38 +95,58 @@ testrun(){
   }
 
 
+
+
+
   /*
   if array value is not initalized
   splice the current get player value in that index
   set xIsNext state to opposite F-> T || T -> F
   so O can play or X can play
-  
+  each player is his own team in a way of thinking
   */
   makeMove(idx : number) {
-    if(!this.squares[idx] &&  this.aPlayer == true ){
-      this.squares.splice(idx, 1 , this.player);
-      this.aPlayer = !this.aPlayer;
-      this.bPlayer = !this.bPlayer;
 
-    }
-    else if(!this.squares[idx] &&  this.bPlayer == true ){
-      this.squares.splice(idx, 1 , this.player);
-      this.bPlayer = !this.bPlayer;
-      this.cPlayer = !this.cPlayer;
+    if(this.selectedmode === "ffa"){
+      if(!this.squares[idx] &&  this.aPlayer == true ){
+        this.squares.splice(idx, 1 , this.player);
+        this.aPlayer = !this.aPlayer;
+        this.bPlayer = !this.bPlayer;
 
-    } 
-    else if(!this.squares[idx] &&  this.cPlayer == true ){
-      this.squares.splice(idx, 1 , this.player);
-      this.cPlayer = !this.cPlayer;
-      this.dPlayer = !this.dPlayer;
+      }
+      else if(!this.squares[idx] &&  this.bPlayer == true ){
+        this.squares.splice(idx, 1 , this.player);
+        this.bPlayer = !this.bPlayer;
+        this.cPlayer = !this.cPlayer;
 
+      } 
+      else if(!this.squares[idx] &&  this.cPlayer == true ){
+        this.squares.splice(idx, 1 , this.player);
+        this.cPlayer = !this.cPlayer;
+        this.dPlayer = !this.dPlayer;
+
+      }
+      else if(!this.squares[idx] &&  this.dPlayer == true ){
+        this.squares.splice(idx, 1 , this.player);
+        this.dPlayer = !this.dPlayer;
+        this.aPlayer = !this.aPlayer;
+        this.turnCounter++;
+      }
     }
-    else if(!this.squares[idx] &&  this.dPlayer == true ){
-      this.squares.splice(idx, 1 , this.player);
-      this.dPlayer = !this.dPlayer;
-      this.aPlayer = !this.aPlayer;
-      this.turnCounter++;
+    else {
+      if(!this.squares[idx] &&  this.aPlayer == true ){
+        this.squares.splice(idx, 1 , this.player);
+        this.aPlayer = !this.aPlayer;
+        this.bPlayer = !this.bPlayer;
+      }
+      else if(!this.squares[idx] &&  this.bPlayer == true ){
+        this.squares.splice(idx, 1 , this.player);
+        this.bPlayer = !this.bPlayer;
+        this.aPlayer = !this.aPlayer;
+        this.turnCounter++;
+      } 
     }
+
     if(this.turnCounter >2){
     this.winner = this.calculateWinner();
     this.draw = this.drawCheck();
@@ -125,34 +155,66 @@ testrun(){
 
 
 
+
+
+
+
+
+  
+
   makeMove2(i : number, j : number) {
-    if(!this.boxBoard[i][j] &&  this.aPlayer == true ){
-      this.boxBoard[i].splice(j, 1 , this.player);
-      this.aPlayer = !this.aPlayer;
-      this.bPlayer = !this.bPlayer;
+    if(this.selectedmode === "ffa"){
+      if(!this.boxBoard[i][j] &&  this.aPlayer == true ){
+        this.boxBoard[i].splice(j, 1 , this.player);
+        this.aPlayer = !this.aPlayer;
+        this.bPlayer = !this.bPlayer;
+      }
+      else if(!this.boxBoard[i][j] &&  this.bPlayer == true ){
+        this.boxBoard[i].splice(j, 1 , this.player);
+        this.bPlayer = !this.bPlayer;
+        this.cPlayer = !this.cPlayer;
+      }
+      else if(!this.boxBoard[i][j] &&  this.cPlayer == true ){
+        this.boxBoard[i].splice(j, 1 , this.player);
+        this.cPlayer = !this.cPlayer;
+        this.dPlayer = !this.dPlayer;
+      }
+      else if(!this.boxBoard[i][j] &&  this.dPlayer == true ){
+        this.boxBoard[i].splice(j, 1 , this.player);
+        this.dPlayer = !this.dPlayer;
+        this.aPlayer = !this.aPlayer;
+        this.turnCounter++;
+      }
     }
-    else if(!this.boxBoard[i][j] &&  this.bPlayer == true ){
-      this.boxBoard[i].splice(j, 1 , this.player);
-      this.bPlayer = !this.bPlayer;
-      this.cPlayer = !this.cPlayer;
-    }
-    else if(!this.boxBoard[i][j] &&  this.cPlayer == true ){
-      this.boxBoard[i].splice(j, 1 , this.player);
-      this.cPlayer = !this.cPlayer;
-      this.dPlayer = !this.dPlayer;
-    }
-    else if(!this.boxBoard[i][j] &&  this.dPlayer == true ){
-      this.boxBoard[i].splice(j, 1 , this.player);
-      this.dPlayer = !this.dPlayer;
-      this.aPlayer = !this.aPlayer;
-      this.turnCounter++;
+    else {
+      if(!this.boxBoard[i][j] &&  this.aPlayer == true ){
+        this.boxBoard[i].splice(j, 1 , this.player);
+        this.aPlayer = !this.aPlayer;
+        this.bPlayer = !this.bPlayer;
+      }
+      else if(!this.boxBoard[i][j] &&  this.bPlayer == true ){
+        this.boxBoard[i].splice(j, 1 , this.player);
+        this.bPlayer = !this.bPlayer;
+        this.aPlayer = !this.aPlayer;
+        this.turnCounter++;
+      }
     }
 
     if(this.turnCounter>=2){
-      this.winner = this.calculateWinner2(i, j);
+
+      if(this.selectednum === 3){
+      this.winner = this.calculateWinner3(i, j);
+      }
+      if(this.selectednum === 4){
+        this.winner = this.calculateWinner4(i, j);
+        }
+      if(this.selectednum === 5){
+          this.winner = this.calculateWinner5(i, j);
+        }
+   
       this.draw = this.drawCheck();
   
-      }
+     }
    
   }
 
@@ -160,7 +222,7 @@ testrun(){
   
   queue:any = [];
 
-  calculateWinner2(i : number, j : number) {
+  calculateWinner3(i : number, j : number) {
  //outer field     
       //top
       if ( i-1 >=0 && this.boxBoard[i-1][j] === this.boxBoard[i][j]) {
@@ -235,6 +297,202 @@ if ( i+1 < this.rows && j-1 >=0 && this.boxBoard[i+1][j-1] === this.boxBoard[i][
 
   return null;
   }
+
+
+
+  calculateWinner4(i : number, j : number) {
+   //left - right check 
+   //its weird but i is for columns
+   if (i-1 >= 0 && this.boxBoard[i-1][j] === this.boxBoard[i][j]) {
+      if (i-2 >= 0 && this.boxBoard[i-2][j] === this.boxBoard[i][j]) {
+        if ( i-3 >= 0 && this.boxBoard[i-3][j] === this.boxBoard[i][j]) {
+          return this.boxBoard[i][j];
+        }
+        if ( i+1 < this.rows && this.boxBoard[i+1][j] === this.boxBoard[i][j]) {
+          return this.boxBoard[i][j];
+        }
+      }
+      if (i+1 < this.rows && this.boxBoard[i+1][j] === this.boxBoard[i][j]) {
+        if (i+2 < this.rows && this.boxBoard[i+2][j] === this.boxBoard[i][j]) {   
+        return this.boxBoard[i][j];
+      }
+    }
+  }
+
+    if (i+1 < this.rows && this.boxBoard[i+1][j] === this.boxBoard[i][j]) {
+      if (i+2 < this.rows && this.boxBoard[i+2][j] === this.boxBoard[i][j]) {   
+        if (i+3 < this.rows && this.boxBoard[i+3][j] === this.boxBoard[i][j]) {   
+          return this.boxBoard[i][j];  
+        }
+      }
+    }
+
+    //top down rows same length as columns so no need to change
+    if (j-1 >= 0 && this.boxBoard[1][j-1] === this.boxBoard[i][j]) {
+      if (j-2 >= 0 && this.boxBoard[i][j-2] === this.boxBoard[i][j]) {
+        if ( j-3 >= 0 && this.boxBoard[i][j-3] === this.boxBoard[i][j]) {
+          return this.boxBoard[i][j];
+        }
+        if ( j+1 < this.rows && this.boxBoard[i][j+1] === this.boxBoard[i][j]) {
+          return this.boxBoard[i][j];
+        }
+      }
+      if (j+1 < this.rows && this.boxBoard[i][j+1] === this.boxBoard[i][j]) {
+        if (j+2 < this.rows && this.boxBoard[i][j+2] === this.boxBoard[i][j]) {   
+        return this.boxBoard[i][j];
+      }
+    }
+  }
+
+    if (j+1 < this.rows && this.boxBoard[i][j+1] === this.boxBoard[i][j]) {
+      if (j+2 < this.rows && this.boxBoard[i][j+2] === this.boxBoard[i][j]) {   
+        if (j+3 < this.rows && this.boxBoard[i][j+3] === this.boxBoard[i][j]) {   
+          return this.boxBoard[i][j];  
+        }
+      }
+    }
+
+    //diagonal left ->  \
+    if ( i-1 >= 0 && j-1 >=0 && this.boxBoard[i-1][j-1] === this.boxBoard[i][j]) {
+      if (i-2 >= 0 && j-2 >=0  && this.boxBoard[i-2][j-2] === this.boxBoard[i][j]) {
+        if (i-3 >= 0 && j-3 >=0  && this.boxBoard[i-3][j-3] === this.boxBoard[i][j]) {
+          return this.boxBoard[i][j];
+        }
+        if ( i+1 < this.rows && j+1 <this.columns && this.boxBoard[i+1][j+1] === this.boxBoard[i][j]) {
+          return this.boxBoard[i][j];
+        }
+      }
+      if ( i+1 < this.rows && j+1 <this.columns && this.boxBoard[i+1][j+1] === this.boxBoard[i][j]) {
+        if ( i+2 < this.rows && j+2 < this.columns && this.boxBoard[i+2][j+2] === this.boxBoard[i][j]) {
+        return this.boxBoard[i][j];
+      }
+    }
+  }
+
+  if ( i+1 < this.rows && j+1 <this.columns && this.boxBoard[i+1][j+1] === this.boxBoard[i][j]) {
+    if ( i+2 < this.rows && j+2 < this.columns && this.boxBoard[i+2][j+2] === this.boxBoard[i][j]) { 
+      if ( i+3 < this.rows && j+3 < this.columns && this.boxBoard[i+3][j+3] === this.boxBoard[i][j]) {
+          return this.boxBoard[i][j];  
+        }
+      }
+    }
+
+  //DIAGONAL RIGHT -> /
+  if ( i-1 >= 0 && j+1 <this.columns && this.boxBoard[i-1][j+1] === this.boxBoard[i][j]) {
+    if (i-2 >= 0 && j+2 <=this.columns && this.boxBoard[i-2][j+2] === this.boxBoard[i][j]) {
+      if (i-3 >= 0 && j+3 >=0  && this.boxBoard[i-3][j+3] === this.boxBoard[i][j]) {
+        return this.boxBoard[i][j];
+      }
+      if ( i+1 < this.rows && j-1 >=0 && this.boxBoard[i+1][j-1] === this.boxBoard[i][j]) {
+        return this.boxBoard[i][j];
+      }
+    }
+    if ( i+1 < this.rows && j-1 >=0 && this.boxBoard[i+1][j-1] === this.boxBoard[i][j]) {
+      if ( i+2 < this.rows && j-2 >= 0 && this.boxBoard[i+2][j-2] === this.boxBoard[i][j]) {
+      return this.boxBoard[i][j];
+    }
+  }
+}
+
+if ( i+1 < this.rows && j-1 >=0 && this.boxBoard[i+1][j-1] === this.boxBoard[i][j]) {
+  if ( i+2 < this.rows && j-2 >= 0 && this.boxBoard[i+2][j-2] === this.boxBoard[i][j]) {
+    if ( i+3 < this.rows && j-3 >= 0 && this.boxBoard[i+3][j-3] === this.boxBoard[i][j]) {
+        return this.boxBoard[i][j];  
+      }
+    }
+  }
+
+  }
+
+
+
+  calculateWinner5(i : number, j : number) {
+      let count = 0;
+      for(let a = 0 ; a < this.rows; a++){
+        for(let b = 0 ; b < this.rows; b++){
+            if(this.boxBoard[a][0] ===  this.boxBoard[i][j] && this.boxBoard[a][b] === this.boxBoard[a][0] ){
+              count++;
+            }
+        }
+        if(count == 5 ){
+          return this.boxBoard[i][j];  
+        }
+        count = 0;
+      }
+      
+      for(let b = 0 ; b < this.rows; b++){
+        for(let a = 0 ; a < this.rows; a++){
+          if(this.boxBoard[0][b] ===  this.boxBoard[i][j] && this.boxBoard[a][b] === this.boxBoard[0][b] ){
+            count++;
+          }
+        }
+        if(count == 5 ){
+          return this.boxBoard[i][j];  
+        }
+        count = 0;
+      }
+
+      for(let a=0, b = 0 ; a<this.rows, b < this.rows; a++, b++){
+        if(this.boxBoard[0][0] ===  this.boxBoard[i][j] && this.boxBoard[a][b] === this.boxBoard[0][0] ){
+            count++;
+          }
+        if(count == 5 ){
+          return this.boxBoard[i][j];  
+        }
+      } 
+      count = 0;
+
+    //   for(let a=this.rows-1, b = 0 ; a>0 && b < this.rows; a--, b++){
+    //     if(this.boxBoard[this.rows-1][this.columns-1] ===  this.boxBoard[i][j] && this.boxBoard[a][b] === this.boxBoard[this.rows-1][this.columns-1] ){
+    //         count++;
+    //         console.log(count);
+    //       }
+
+    //     if(count == 5 ){
+    //       return this.boxBoard[i][j];  
+    //     }
+    //   } 
+    //   count = 0;
+
+    }
+
+
+
+
+
+
+
+  // if (i-1 >= 0 && this.boxBoard[i-1][j] === this.boxBoard[i][j]) {
+  //   if (i-2 >= 0 && this.boxBoard[i-2][j] === this.boxBoard[i][j]) {
+  //     if (i-3 >= 0 && this.boxBoard[i-3][j] === this.boxBoard[i][j]) {
+  //       if (i-4 >= 0 && this.boxBoard[i-4][j] === this.boxBoard[i][j]) {
+  //         return this.boxBoard[i][j];  
+  //       }
+  //       if (i+1 <= this.rows && this.boxBoard[i+1][j] === this.boxBoard[i][j]) {
+  //         return this.boxBoard[i][j];  
+  //       }
+  //     }
+  //     if (i+1 <= this.rows && this.boxBoard[i+1][j] === this.boxBoard[i][j]) {
+  //       if (i+2 <= this.rows && this.boxBoard[i+2][j] === this.boxBoard[i][j]) {
+  //         return this.boxBoard[i][j];  
+
+  //       }
+
+  //     }
+
+
+
+
+  //   }
+  // }
+
+
+
+
+
+
+
+
 
 
 /*

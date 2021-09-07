@@ -1,6 +1,35 @@
 
 
 
+
+<p><span> 
+    Select a Win condition:
+</span></p>
+<select (change) = "selectChangehandler($event)" [value]='3'> 
+<option value = "3"> 3 </option> 
+<option value = "4"> 4 </option>
+<option value = "5"> 5 </option> 
+
+</select>
+<p><span>You Selected
+</span><b>{{selected}}</b>
+
+<h4><span> 
+    Select a Mode
+</span></h4>
+<select (change) = "selectChangehandlermode($event)" [value]='3'> 
+<option value = "ffa"> FFA </option>
+<option value = "team"> Teams </option> 
+
+
+</select>
+<p><span>You Selected
+</span><b>{{selectedmode}}</b>
+
+
+
+</p>
+
 <h1> Current Player : {{player}} </h1>
 <h2   
 *ngIf = "winner" >    
