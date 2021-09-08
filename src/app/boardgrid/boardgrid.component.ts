@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { PlaymenuComponent } from '../playmenu/playmenu.component'
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-boardgrid',
@@ -17,24 +20,67 @@ export class BoardgridComponent implements OnInit {
   cPlayer : boolean = false; 
   dPlayer : boolean = false;
   winner : any = null;
+  winnername :any=null;
   draw : boolean = false;
+
+
+  users = {
+    player1name: 'player1', player1symbol: 'A',
+    player2name: 'player2', player2symbol: 'B' ,
+    player3name: 'player3', player3symbol: 'C' ,
+    player4name: 'player4', player4symbol: 'D',
+    selectedmode: 'ffa', selected : '3'
+    
+  };
+
+  constructor(public dialog: MatDialog, private data: DataService) { }
+
+
+  openplaymenu() {
+    this.dialog.open(PlaymenuComponent, {width: '700px', height: '650px'});
+  }
+
+  selected : string = '3';
+  selectedmode : string = 'ffa';
+
+  ngOnInit(): void {
+    this.newGame();
+    this.new2DBoard();
+
+    this.data.currentMessage.subscribe(users => this.users = users)
+
+  }
+
+
+  // p1name: string = 'A';
+  // p2name: string = 'B';
+  // p3name: string = 'C';
+  // p4name: string = 'D';
+
+  p1name: string = this.users.player1symbol;
+  p2name: string = this.users.player2symbol;
+  p3name: string = this.users.player3symbol;
+  p4name: string = this.users.player4symbol;
+
+
+
 
 
   rows = 5;
   columns = 5;
 
-  selected : string = '';
-  selectedmode : string = 'ffa';
-  selectednum: number = 3;
+  // selected : string = '';
+  // selectedmode : string = 'ffa';
+  // selectednum: number = 3;
 
-  selectChangehandler(event : any){
-    this.selected = event.target.value;
-    this.selectednum = +this.selected;
-  } 
+  // selectChangehandler(event : any){
+  //   this.selected = event.target.value;
+  //   this.selectednum = +this.selected;
+  // } 
 
-  selectChangehandlermode(event : any){
-    this.selectedmode = event.target.value;
-  } 
+  // selectChangehandlermode(event : any){
+  //   this.selectedmode = event.target.value;
+  // } 
 
 
   new2DBoard(){
@@ -47,12 +93,7 @@ export class BoardgridComponent implements OnInit {
   }
 
 
-  constructor() { }
-
-  ngOnInit(): void {
-    this.newGame();
-    this.new2DBoard();
-  }
+  
 
   //reset the board
   newGame(){
@@ -64,6 +105,7 @@ export class BoardgridComponent implements OnInit {
     this.bPlayer = false; 
     this.cPlayer  = false; 
     this.dPlayer = false; 
+    this.winnername = null;
     this.new2DBoard();
     //this.testrun();
     this.turnCounter = 0;
@@ -80,20 +122,36 @@ testrun(){
 
   get player(){
     if(this.aPlayer){
-      return 'A';
+      return this.users.player1name;
     }
     else if (this.bPlayer){
-      return 'B';
+      return this.users.player2name;
     }
     else if (this.cPlayer){
-      return 'C';
+      return this.users.player3name;
     }
     else if (this.dPlayer){
-      return 'D';
+      return this.users.player4name;
     }
   return '-1'; 
   }
 
+
+  get playersymbol(){
+    if(this.aPlayer){
+      return this.users.player1symbol;
+    }
+    else if (this.bPlayer){
+      return this.users.player2symbol;
+    }
+    else if (this.cPlayer){
+      return this.users.player3symbol;
+    }
+    else if (this.dPlayer){
+      return this.users.player4symbol;
+    }
+  return '-1'; 
+  }
 
 
 
@@ -105,53 +163,56 @@ testrun(){
   so O can play or X can play
   each player is his own team in a way of thinking
   */
-  makeMove(idx : number) {
+  // makeMove(idx : number) {
 
-    if(this.selectedmode === "ffa"){
-      if(!this.squares[idx] &&  this.aPlayer == true ){
-        this.squares.splice(idx, 1 , this.player);
-        this.aPlayer = !this.aPlayer;
-        this.bPlayer = !this.bPlayer;
+  //   if(this.users.selectedmode === "ffa"){
+  //     if(!this.squares[idx] &&  this.aPlayer == true ){
+  //       this.squares.splice(idx, 1 , this.player);
+        
+  //       this.aPlayer = !this.aPlayer;
+  //       this.bPlayer = !this.bPlayer;
 
-      }
-      else if(!this.squares[idx] &&  this.bPlayer == true ){
-        this.squares.splice(idx, 1 , this.player);
-        this.bPlayer = !this.bPlayer;
-        this.cPlayer = !this.cPlayer;
+  //     }
+  //     else if(!this.squares[idx] &&  this.bPlayer == true ){
+  //       this.squares.splice(idx, 1 , this.player);
 
-      } 
-      else if(!this.squares[idx] &&  this.cPlayer == true ){
-        this.squares.splice(idx, 1 , this.player);
-        this.cPlayer = !this.cPlayer;
-        this.dPlayer = !this.dPlayer;
+  //       this.bPlayer = !this.bPlayer;
+  //       this.cPlayer = !this.cPlayer;
 
-      }
-      else if(!this.squares[idx] &&  this.dPlayer == true ){
-        this.squares.splice(idx, 1 , this.player);
-        this.dPlayer = !this.dPlayer;
-        this.aPlayer = !this.aPlayer;
-        this.turnCounter++;
-      }
-    }
-    else {
-      if(!this.squares[idx] &&  this.aPlayer == true ){
-        this.squares.splice(idx, 1 , this.player);
-        this.aPlayer = !this.aPlayer;
-        this.bPlayer = !this.bPlayer;
-      }
-      else if(!this.squares[idx] &&  this.bPlayer == true ){
-        this.squares.splice(idx, 1 , this.player);
-        this.bPlayer = !this.bPlayer;
-        this.aPlayer = !this.aPlayer;
-        this.turnCounter++;
-      } 
-    }
+  //     } 
+  //     else if(!this.squares[idx] &&  this.cPlayer == true ){
+  //       this.squares.splice(idx, 1 , this.player);
+        
+  //       this.cPlayer = !this.cPlayer;
+  //       this.dPlayer = !this.dPlayer;
 
-    if(this.turnCounter >2){
-    this.winner = this.calculateWinner();
-    this.draw = this.drawCheck();
-    }
-  }
+  //     }
+  //     else if(!this.squares[idx] &&  this.dPlayer == true ){
+  //       this.squares.splice(idx, 1 , this.player);
+  //       this.dPlayer = !this.dPlayer;
+  //       this.aPlayer = !this.aPlayer;
+  //       this.turnCounter++;
+  //     }
+  //   }
+  //   else {
+  //     if(!this.squares[idx] &&  this.aPlayer == true ){
+  //       this.squares.splice(idx, 1 , this.player);
+  //       this.aPlayer = !this.aPlayer;
+  //       this.bPlayer = !this.bPlayer;
+  //     }
+  //     else if(!this.squares[idx] &&  this.bPlayer == true ){
+  //       this.squares.splice(idx, 1 , this.player);
+  //       this.bPlayer = !this.bPlayer;
+  //       this.aPlayer = !this.aPlayer;
+  //       this.turnCounter++;
+  //     } 
+  //   }
+
+  //   if(this.turnCounter >2){
+  //   this.winner = this.calculateWinner();
+  //   this.draw = this.drawCheck();
+  //   }
+  // }
 
 
 
@@ -163,24 +224,29 @@ testrun(){
   
 
   makeMove2(i : number, j : number) {
-    if(this.selectedmode === "ffa"){
+    if(this.users.selectedmode === "ffa"){
       if(!this.boxBoard[i][j] &&  this.aPlayer == true ){
-        this.boxBoard[i].splice(j, 1 , this.player);
+        this.boxBoard[i].splice(j, 1 , this.users.player1symbol);
+        //console.log("this.player a  "+ this.users.player1symbol);
         this.aPlayer = !this.aPlayer;
         this.bPlayer = !this.bPlayer;
+        //this.testrun();
       }
       else if(!this.boxBoard[i][j] &&  this.bPlayer == true ){
-        this.boxBoard[i].splice(j, 1 , this.player);
+        this.boxBoard[i].splice(j, 1 , this.users.player2symbol);
+        //console.log("this.player  b "+ this.player);
         this.bPlayer = !this.bPlayer;
         this.cPlayer = !this.cPlayer;
       }
       else if(!this.boxBoard[i][j] &&  this.cPlayer == true ){
-        this.boxBoard[i].splice(j, 1 , this.player);
+        this.boxBoard[i].splice(j, 1 , this.users.player3symbol);
+       // console.log("this.player  c "+ this.player);
         this.cPlayer = !this.cPlayer;
         this.dPlayer = !this.dPlayer;
       }
       else if(!this.boxBoard[i][j] &&  this.dPlayer == true ){
-        this.boxBoard[i].splice(j, 1 , this.player);
+        this.boxBoard[i].splice(j, 1 , this.users.player4symbol);
+      //  console.log("this.player  d "+ this.player);
         this.dPlayer = !this.dPlayer;
         this.aPlayer = !this.aPlayer;
         this.turnCounter++;
@@ -188,35 +254,76 @@ testrun(){
     }
     else {
       if(!this.boxBoard[i][j] &&  this.aPlayer == true ){
-        this.boxBoard[i].splice(j, 1 , this.player);
+        this.boxBoard[i].splice(j, 1 , this.users.player1symbol);
         this.aPlayer = !this.aPlayer;
         this.bPlayer = !this.bPlayer;
       }
       else if(!this.boxBoard[i][j] &&  this.bPlayer == true ){
-        this.boxBoard[i].splice(j, 1 , this.player);
+        this.boxBoard[i].splice(j, 1 , this.users.player2symbol);
         this.bPlayer = !this.bPlayer;
         this.aPlayer = !this.aPlayer;
         this.turnCounter++;
       }
     }
 
-    if(this.turnCounter>=2){
+   // if(this.turnCounter>=2){
 
-      if(this.selectednum === 3){
+      if(this.users.selected === '3'){
       this.winner = this.calculateWinner3(i, j);
+        if(this.winner && this.winner === this.users.player1symbol){
+          this.winnername = this.users.player1name;
+        }
+        if(this.winner && this.winner === this.users.player2symbol){
+          this.winnername = this.users.player2name;
+        }
+        if(this.winner && this.winner === this.users.player3symbol){
+          this.winnername = this.users.player3name;
+        }
+        if(this.winner && this.winner === this.users.player4symbol){
+          this.winnername = this.users.player4name;
+        }
       }
-      if(this.selectednum === 4){
+      if(this.users.selected === '4'){
         this.winner = this.calculateWinner4(i, j);
+        if(this.winner && this.winner === this.users.player1symbol){
+          this.winnername = this.users.player1name;
         }
-      if(this.selectednum === 5){
+        if(this.winner && this.winner === this.users.player2symbol){
+          this.winnername = this.users.player2name;
+        }
+        if(this.winner && this.winner === this.users.player3symbol){
+          this.winnername = this.users.player3name;
+        }
+        if(this.winner && this.winner === this.users.player4symbol){
+          this.winnername = this.users.player4name;
+        }
+
+        }
+      if(this.users.selected === '5'){
           this.winner = this.calculateWinner5(i, j);
+          if(this.winner && this.winner === this.users.player1symbol){
+            this.winnername = this.users.player1name;
+          }
+          if(this.winner && this.winner === this.users.player2symbol){
+            this.winnername = this.users.player2name;
+          }
+          if(this.winner && this.winner === this.users.player3symbol){
+            this.winnername = this.users.player3name;
+          }
+          if(this.winner && this.winner === this.users.player4symbol){
+            this.winnername = this.users.player4name;
+          }
+
         }
-   
+     // }
       this.draw = this.drawCheck();
   
-     }
-   
+
   }
+
+
+
+
 
 
   
@@ -328,9 +435,10 @@ if ( i+1 < this.rows && j-1 >=0 && this.boxBoard[i+1][j-1] === this.boxBoard[i][
     }
 
     //top down rows same length as columns so no need to change
-    if (j-1 >= 0 && this.boxBoard[1][j-1] === this.boxBoard[i][j]) {
+    if (j-1 >= 0 && this.boxBoard[i][j-1] === this.boxBoard[i][j]) {
       if (j-2 >= 0 && this.boxBoard[i][j-2] === this.boxBoard[i][j]) {
         if ( j-3 >= 0 && this.boxBoard[i][j-3] === this.boxBoard[i][j]) {
+          console.log("top checked");
           return this.boxBoard[i][j];
         }
         if ( j+1 < this.rows && this.boxBoard[i][j+1] === this.boxBoard[i][j]) {
@@ -455,44 +563,6 @@ if ( i+1 < this.rows && j-1 >=0 && this.boxBoard[i+1][j-1] === this.boxBoard[i][
     //   count = 0;
 
     }
-
-
-
-
-
-
-
-  // if (i-1 >= 0 && this.boxBoard[i-1][j] === this.boxBoard[i][j]) {
-  //   if (i-2 >= 0 && this.boxBoard[i-2][j] === this.boxBoard[i][j]) {
-  //     if (i-3 >= 0 && this.boxBoard[i-3][j] === this.boxBoard[i][j]) {
-  //       if (i-4 >= 0 && this.boxBoard[i-4][j] === this.boxBoard[i][j]) {
-  //         return this.boxBoard[i][j];  
-  //       }
-  //       if (i+1 <= this.rows && this.boxBoard[i+1][j] === this.boxBoard[i][j]) {
-  //         return this.boxBoard[i][j];  
-  //       }
-  //     }
-  //     if (i+1 <= this.rows && this.boxBoard[i+1][j] === this.boxBoard[i][j]) {
-  //       if (i+2 <= this.rows && this.boxBoard[i+2][j] === this.boxBoard[i][j]) {
-  //         return this.boxBoard[i][j];  
-
-  //       }
-
-  //     }
-
-
-
-
-  //   }
-  // }
-
-
-
-
-
-
-
-
 
 
 /*

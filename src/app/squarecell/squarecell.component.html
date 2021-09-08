@@ -1,9 +1,9 @@
 
 <button mat-raised-button [disabled] = check() color="accent" *ngIf="!value">{{ value }}</button>
 
-<button mat-raised-button color="primary"  *ngIf="value == 'A'">{{ value }}</button>
-<button  mat-raised-button color="warn"  *ngIf="value == 'B'">{{ value }}</button>
-<button mat-raised-button color="primary"  *ngIf="value == 'C'">{{ value }}</button>
-<button  mat-raised-button color="warn"  *ngIf="value == 'D'">{{ value }}</button>
+<button mat-raised-button color="primary"  *ngIf="value == users.player1symbol">{{ value }}</button>
+<button  mat-raised-button color="warn"  *ngIf="value == users.player2symbol">{{ value }}</button>
+<button mat-raised-button color="primary"  *ngIf="value == users.player3symbol">{{ value }}</button>
+<button  mat-raised-button color="warn"  *ngIf="value == users.player4symbol">{{ value }}</button>
 
 

@@ -1,1 +1,78 @@
-<p>playmenu works!</p>
+<mat-toolbar color="primary">
+    Game Options
+  <span class="flex-spacer"></span>
+  <button mat-button mat-dialog-close>&times;</button>
+</mat-toolbar>
+
+
+
+<form novalidate (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <p>
+      <mat-form-field>
+        <input matInput placeholder="player1name" type="text" [(ngModel)]="users.player1name" name="player1name">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="player1symbol" type="text" [(ngModel)]="users.player1symbol" name="player1symbol" maxlength="1">
+       
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field>
+        <input matInput placeholder="player2name" type="text" [(ngModel)]="users.player2name" name="player2name">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="player2symbol" type="text" [(ngModel)]="users.player2symbol" name="player2symbol" maxlength="1">
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <input matInput placeholder="player3name" type="text" [(ngModel)]="users.player3name" name="player3name">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="player3symbol" type="text" [(ngModel)]="users.player3symbol" name="player3symbol" maxlength="1">
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <input matInput placeholder="player4name" type="text" [(ngModel)]="users.player4name" name="player4name">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="player4symbol" type="text" [(ngModel)]="users.player4symbol" name="player4symbol" maxlength="1">
+      </mat-form-field>
+    </p>
+
+  </mat-dialog-content>
+
+
+  <h4><span> 
+    Select a Mode
+</span></h4>
+
+<select  [(ngModel)]="users.selectedmode" name="selectedmode" > 
+<option value = "ffa"> FFA </option>
+<option value = "team"> Teams </option> 
+</select>
+
+<p><span> 
+    Select a Win condition:
+</span></p>
+<!-- <select (change) = "selectChangehandler($event)" [value]='3'>  -->
+<select [(ngModel)]="users.selected" name="selected" >
+<option value = "3"> 3 </option> 
+<option value = "4"> 4 </option>
+<option value = "5"> 5 </option> 
+</select>
+
+
+
+  <mat-dialog-actions>
+    <span class="flex-spacer"></span>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button type="submit" mat-button class="background-primary text-floral-white" >Save</button>
+  </mat-dialog-actions>
+</form>
+
+
+

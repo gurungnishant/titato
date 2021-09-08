@@ -11,6 +11,13 @@ app-squarecell {
   
 }
 
+.cont{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 0%;
+
+}
+
 
 .butn { width: 90px;max-height: 90px; }
 
@@ -19,7 +26,7 @@ app-squarecell {
 
 
 
-h1 { color: #e7e7e7; font-family: 'Lato', sans-serif; font-size: 40px; font-weight: 300; line-height: 58px; margin: 0 0 58px; }
+h1 { color: #e7e7e7; font-family: 'Lato', sans-serif; font-size: 40px; font-weight: 200; line-height: 40px; margin: 0 0 28px; }
 
 
 .winbg{
@@ -29,6 +36,6 @@ h1 { color: #e7e7e7; font-family: 'Lato', sans-serif; font-size: 40px; font-weig
     background-image: linear-gradient ( black 80%, white 20% );
 }
 
-h2 {    color: #d3d3d3; font-family: 'Lato', sans-serif; font-size: 40px; font-weight: 300; line-height: 58px; margin: 0 0 58px; }
+h2 {    color: #d3d3d3; font-family: 'Lato', sans-serif; font-size: 40px; font-weight: 300; line-height: 58px; margin: 0 0 38px; }
 
 

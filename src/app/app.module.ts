@@ -15,6 +15,10 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { PlaymenuComponent } from './playmenu/playmenu.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -32,9 +36,17 @@ import { PlaymenuComponent } from './playmenu/playmenu.component';
     FlexLayoutModule,
     MatGridListModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    FormsModule,
+    MatDialogModule,
+    MatFormFieldModule, 
+    MatInputModule,
+    ReactiveFormsModule,
   ],
   providers: [],
+  entryComponents: [
+    PlaymenuComponent
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

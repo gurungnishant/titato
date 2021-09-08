@@ -1,39 +1,40 @@
 
 
+<a mat-raised-button color="warn" (click)="openplaymenu()">Game Options</a>
 
 
-<p><span> 
-    Select a Win condition:
-</span></p>
-<select (change) = "selectChangehandler($event)" [value]='3'> 
-<option value = "3"> 3 </option> 
-<option value = "4"> 4 </option>
-<option value = "5"> 5 </option> 
-
-</select>
-<p><span>You Selected
-</span><b>{{selected}}</b>
-
-<h4><span> 
-    Select a Mode
-</span></h4>
-<select (change) = "selectChangehandlermode($event)" [value]='3'> 
-<option value = "ffa"> FFA </option>
-<option value = "team"> Teams </option> 
+<div class = "cont">
+<div>player 1 : {{users.player1name}}   </div>
+<div>player 2 : {{users.player2name}}     </div>
+<div>player 3 : {{users.player3name}}    </div>
+<div>player 4 : {{users.player4name}}    </div>
+</div>
 
 
-</select>
-<p><span>You Selected
-</span><b>{{selectedmode}}</b>
+<div class = "cont">
+    <div> Player 1 Symbol: {{users.player1symbol}}</div>
+    <div> Player 2 Symbol: {{users.player2symbol}}</div>
+    <div> Player 3 Symbol: {{users.player3symbol}}</div>
+    <div> Player 4 Symbol: {{users.player4symbol}}</div>
+</div>
 
 
-
+<p><span> Selected Win Condition
+</span><b>{{users.selected}}</b>
 </p>
 
-<h1> Current Player : {{player}} </h1>
+<p><span>Selected Game Mode
+</span><b>{{users.selectedmode}}</b>
+</p>
+
+
+
+
+<h1> Current Player Turn: {{player}} </h1>
+<h2> {{player}} Symbol: {{playersymbol}} </h2>
 <h2   
-*ngIf = "winner" >    
-    Player {{ winner }} has won the game!
+*ngIf = "winnername" >    
+     {{ winnername }} has won the game!
 </h2>
 <h2   
 *ngIf = "draw && !winner" >    
@@ -42,31 +43,22 @@
 
 <button mat-raised-button color="primary" (click) = "newGame()"> Start New Game </button>
 
-<!--   
-    
-    <main>
-    <app-squarecell
-
-        *ngFor = "let val of squares; let ind  = index"
-       
-        [value] = "val"
-        [winnerFound] = "winner"
-        (click) = "makeMove(ind)">
-    </app-squarecell>
-    
-</main>    -->
 
 <main>
-   
-
     <div  *ngFor = "let ro of boxBoard; let i  = index">
         <app-squarecell *ngFor = "let co of ro; let j  = index"
         [value] = "co"
         [winnerFound] = "winner"
+
+
         (click) = "makeMove2(i, j)">
         </app-squarecell>
-        </div>
+    </div>
 </main> 
+
+
+
+
 
 
 
